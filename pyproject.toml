@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "sotest"
+version = "0.1.0"
+description = ""
+authors = ["Pavel Yakovlev <pdyakovlev@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.111.0"
+uvicorn = "^0.30.1"
+watchgod = "^0.8.2"
+python-dotenv = "^1.0.1"
+sqlalchemy = "^2.0.31"
+mypy = "^1.10.0"
+pylint = "^3.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
