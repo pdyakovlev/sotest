@@ -32,6 +32,8 @@ async def get_category(
         session: AsyncSession = Depends(get_async_session)
 ):
     category = await category_crud.get(category_id, session)
+    if category is None:
+        return {'name': "No Category"}  # сделать валидатор
     return category
 
 
@@ -63,12 +65,12 @@ async def partialy_update_category(
         category_id: int,
         cat_in: CategoryRead,
         session: AsyncSession = Depends(get_async_session)):
-    category = await category_crud.get_by_attribute('id', category_id, session)
+    category = await category_crud.get(category_id, session)
     category_updated = await category_crud.update(category, cat_in, session)
     return category_updated
 
 
-@router.delete('/{category_id}',
+@router.delete('/{category_id}/',
                response_model=CategoryRead,
                response_model_exclude_none=True,)
 async def remove_category(category_id: int,
