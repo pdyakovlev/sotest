@@ -33,7 +33,8 @@ async def get_product(
 ):
     product = await product_crud.get(product_id, session)
     if product is None:
-        return {'name': "No Prod"}  # сделать валидатор
+        return {"name": "No Prod",
+                "category": 000}  # сделать валидатор
     return product
 
 
@@ -46,10 +47,10 @@ async def create_product(
         product: ProductCreate,
         session: AsyncSession = Depends(get_async_session)
 ):
-    product_id = await product_crud.get_by_attribute('name',
-                                                     product.name,
-                                                     session)
-    if product_id is not None:
+    product_exists = await product_crud.get_by_attribute('name',
+                                                         product.name,
+                                                         session)
+    if product_exists is not None:
         raise HTTPException(
             status_code=422,
             detail='Подобный продукт уже существует!',
@@ -63,10 +64,10 @@ async def create_product(
               response_model_exclude_none=True,)
 async def partialy_update_product(
         product_id: int,
-        cat_in: ProductCreate,
+        prod_in: ProductCreate,
         session: AsyncSession = Depends(get_async_session)):
     product = await product_crud.get(product_id, session)
-    product_updated = await product_crud.update(product, cat_in, session)
+    product_updated = await product_crud.update(product, prod_in, session)
     return product_updated
 
 
